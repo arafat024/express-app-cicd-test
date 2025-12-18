@@ -1,0 +1,20 @@
+services:
+  app:
+    image: arafat024/express-app-cicd-test:latest
+    container_name: express-app-cicd-test
+    ports:
+      - "8080:8080"
+    restart: always
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+
+  watchtower:
+    image: containrrr/watchtower:latest
+    container_name: watchtower
+    restart: always
+    environment:
+      - WATCHTOWER_POLL_INTERVAL=60
+      - WATCHTOWER_LABEL_ENABLE=true
+      - DOCKER_API_VERSION=1.44
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
